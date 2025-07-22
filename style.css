@@ -1,0 +1,60 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: sans-serif;
+  background: url('han.png') no-repeat center center fixed;
+  background-size: cover;
+  animation: backgroundFade 20s ease-in-out infinite alternate;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+@keyframes backgroundFade {
+  0%   { filter: brightness(100%); }
+  100% { filter: brightness(70%); }
+}
+
+.container {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 2em;
+  border-radius: 20px;
+  animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 0.5em;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 5px white; }
+  to   { text-shadow: 0 0 20px white; }
+}
+
+#temperature {
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 0.3em;
+}
+
+.time {
+  font-size: 1em;
+  opacity: 0.9;
+  margin-bottom: 1em;
+}
+
+.danger {
+  font-size: 1.1em;
+  color: #ffaaaa;
+  font-weight: bold;
+}
