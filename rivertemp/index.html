@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>한강 물 온도</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>한강 물 온도</h1>
+    <p id="temperature">불러오는 중...</p>
+    <p class="time" id="time"></p>
+    <p class="danger" id="danger-message"></p>
+  </div>
+
+  <script>
+    function getDangerMessage(temp) {
+      if (temp < -10) return '생존 가능성이 없어요!';
+      if (temp < 0) return '15분 이내에 저체온증으로 사망해요!';
+      if (temp < 10) return '30분 이내에 저체온증으로 사망해요!';
+      if (temp >= 20) return '3분 이내에 익사해요!';
+      return '상대적으로 안전하지만 조심하세요!';
+    }
+
+    function formatDate(dateStr, timeStr) {
+      const year = dateStr.slice(0, 4);
+      const month = dateStr.slice(4, 6);
+      const day = dateStr.slice(6, 8);
+      return `${year}/${month}/${day} ${timeStr} 기준`;
+    }
+
+    async function fetchTemperature() {
+      try {
+        const response = await fetch('https://api.ivl.is/hangangtemp/');
+        const data = await response.json();
+
+        if (data.success) {
+          const temp = data.temperature;
+          document.getElementById('temperature').innerText = `${temp}°C`;
+          document.getElementById('time').innerText = formatDate(data.date, data.time);
+          document.getElementById('danger-message').innerText = getDangerMessage(temp);
+        } else {
+          document.getElementById('temperature').innerText = '데이터를 불러오지 못했습니다.';
+        }
+      } catch (error) {
+        document.getElementById('temperature').innerText = '에러 발생!';
+      }
+    }
+
+    fetchTemperature();
+  </script>
+</body>
+</html>
